@@ -1,4 +1,3 @@
-
 class Cta {
   final String text;
   final String type;
@@ -18,12 +17,12 @@ class Cta {
 
   factory Cta.fromJson(Map<String, dynamic> json) {
     return Cta(
-      text: json['text'],
-      type: json['type'],
-      bgColor: json['bg_color'],
-      isCircular: json['is_circular'],
-      isSecondary: json['is_secondary'],
-      strokeWidth: json['stroke_width'],
+      text: json['text'] ?? '',
+      type: json['type'] ?? '',
+      bgColor: json['bg_color'] ?? '',
+      isCircular: json['is_circular'] ?? false,
+      isSecondary: json['is_secondary'] ?? false,
+      strokeWidth: json['stroke_width'] ?? 0,
     );
   }
 }

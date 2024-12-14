@@ -29,14 +29,15 @@ class ApiResponse {
     return ApiResponse(
       id: json['id'],
       slug: json['slug'],
-      title: json['title'],
-      formattedTitle: json['formatted_title'],
-      description: json['description'],
-      formattedDescription: json['formatted_description'],
-      assets: json['assets'],
-      hcGroups: (json['hc_groups'] as List)
-          .map((group) => HcGroup.fromJson(group))
-          .toList(),
+      title: json['title'] ?? '',
+      formattedTitle: json['formatted_title'] ?? '',
+      description: json['description'] ?? '',
+      formattedDescription: json['formatted_description'] ?? '',
+      assets: json['assets'] ?? {},
+      hcGroups: (json['hc_groups'] as List?)
+              ?.map((group) => HcGroup.fromJson(group))
+              .toList() ??
+          [],
     );
   }
 }

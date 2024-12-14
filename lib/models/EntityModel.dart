@@ -17,8 +17,8 @@ class Entity {
 
   factory Entity.fromJson(Map<String, dynamic> json) {
     return Entity(
-      text: json['text'],
-      type: json['type'],
+      text: json['text'] ?? '',
+      type: json['type'] ?? '',
       color: json['color'],
       fontSize: json['font_size'],
       fontStyle: json['font_style'],

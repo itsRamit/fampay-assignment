@@ -2,7 +2,6 @@ import 'package:card_app/models/BgGradientModel.dart';
 import 'package:card_app/models/BgImageModel.dart';
 import 'package:card_app/models/CtaModel.dart';
 import 'package:card_app/models/FormattedTextModel.dart';
-
 import 'IconModel.dart';
 
 class Card {
@@ -50,9 +49,9 @@ class Card {
 
   factory Card.fromJson(Map<String, dynamic> json) {
     return Card(
-      id: json['id'],
-      name: json['name'],
-      slug: json['slug'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      slug: json['slug'] ?? '',
       title: json['title'],
       formattedTitle: json['formatted_title'] != null
           ? FormattedText.fromJson(json['formatted_title'])
@@ -72,11 +71,11 @@ class Card {
           ? BgGradient.fromJson(json['bg_gradient'])
           : null,
       cta: (json['cta'] as List?)?.map((e) => Cta.fromJson(e)).toList(),
-      isDisabled: json['is_disabled'],
-      isShareable: json['is_shareable'],
-      isInternal: json['is_internal'],
+      isDisabled: json['is_disabled'] ?? false,
+      isShareable: json['is_shareable'] ?? false,
+      isInternal: json['is_internal'] ?? false,
       bgColor: json['bg_color'],
-      iconSize: json['icon_size'],
+      iconSize: json['icon_size'] ?? 0,
     );
   }
 }

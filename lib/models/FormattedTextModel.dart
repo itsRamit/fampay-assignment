@@ -13,11 +13,12 @@ class FormattedText {
 
   factory FormattedText.fromJson(Map<String, dynamic> json) {
     return FormattedText(
-      text: json['text'],
-      align: json['align'],
-      entities: (json['entities'] as List)
-          .map((entity) => Entity.fromJson(entity))
-          .toList(),
+      text: json['text'] ?? '',
+      align: json['align'] ?? '',
+      entities: (json['entities'] as List?)
+              ?.map((entity) => Entity.fromJson(entity))
+              .toList() ??
+          [],
     );
   }
 }

@@ -13,10 +13,10 @@ class Icon {
 
   factory Icon.fromJson(Map<String, dynamic> json) {
     return Icon(
-      imageType: json['image_type'],
-      imageUrl: json['image_url'],
+      imageType: json['image_type'] ?? '',
+      imageUrl: json['image_url'] ?? '',
       webpImageUrl: json['webp_image_url'],
-      aspectRatio: json['aspect_ratio'],
+      aspectRatio: json['aspect_ratio'] ?? 0.0,
     );
   }
 }

@@ -9,8 +9,8 @@ class BgGradient {
 
   factory BgGradient.fromJson(Map<String, dynamic> json) {
     return BgGradient(
-      angle: json['angle'],
-      colors: List<String>.from(json['colors']),
+      angle: json['angle'] ?? 0,
+      colors: (json['colors'] as List?)?.map((e) => e.toString()).toList() ?? [],
     );
   }
 }
