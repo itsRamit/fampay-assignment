@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:card_app/constants/ApiConstants.dart';
 import 'package:card_app/models/ApiResponse.dart';
 import 'package:http/http.dart' as http;
 
 final http.Client _client = http.Client();
 
 class ApiService {
-  late ApiResponse _response;
-
-  Future<ApiResponse> get(String url, {dynamic queryParams}) async {
+  Future<ApiResponse> get(String baseURl, String path ,{dynamic queryParams}) async {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
     try {
-      Uri uri = Uri.https(url, queryParams);
+      Uri uri = Uri.https(baseURl,
+          '/$path', queryParams);
       final response = await _client.get(
         uri,
         headers: headers,
@@ -24,7 +24,9 @@ class ApiService {
 
       // Checking for successful response
       if (response.statusCode >= 200 && response.statusCode < 299) {
-        return ApiResponse.fromJson(json.decode(response.body.toString()));
+        List<dynamic> listBody = json.decode(response.body.toString());
+        Map<String, dynamic> jsonBody = listBody[0];
+        return ApiResponse.fromJson(jsonBody);
       } else {
         // To Handle different error responses
         if (response.statusCode == 404) {
