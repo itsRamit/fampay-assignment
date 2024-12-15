@@ -16,7 +16,7 @@ class Icon {
       imageType: json['image_type'] ?? '',
       imageUrl: json['image_url'] ?? '',
       webpImageUrl: json['webp_image_url'],
-      aspectRatio: json['aspect_ratio'] ?? 0.0,
+      aspectRatio: (json['aspect_ratio'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

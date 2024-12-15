@@ -20,7 +20,7 @@ class Entity {
       text: json['text'] ?? '',
       type: json['type'] ?? '',
       color: json['color'],
-      fontSize: json['font_size'],
+      fontSize: (json['font_size'] as num?)?.toInt() ?? 16,
       fontStyle: json['font_style'],
       fontFamily: json['font_family'],
     );

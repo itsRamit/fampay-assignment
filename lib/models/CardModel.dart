@@ -49,7 +49,7 @@ class Card {
 
   factory Card.fromJson(Map<String, dynamic> json) {
     return Card(
-      id: json['id'] ?? 0,
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] ?? '',
       slug: json['slug'] ?? '',
       title: json['title'],
@@ -75,7 +75,7 @@ class Card {
       isShareable: json['is_shareable'] ?? false,
       isInternal: json['is_internal'] ?? false,
       bgColor: json['bg_color'],
-      iconSize: json['icon_size'] ?? 0,
+      iconSize: (json['icon_size'] as num?)?.toInt() ?? 0,
     );
   }
 }

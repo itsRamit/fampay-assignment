@@ -27,19 +27,19 @@ class HcGroup {
 
   factory HcGroup.fromJson(Map<String, dynamic> json) {
     return HcGroup(
-      id: json['id'] ?? 0,
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] ?? '',
       designType: json['design_type'] ?? '',
-      cardType: json['card_type'] ?? 0,
+      cardType: (json['card_type'] as num).toInt() ?? 0,
       cards: (json['cards'] as List?)
               ?.map((card) => Card.fromJson(card))
               .toList() ??
           [],
       isScrollable: json['is_scrollable'] ?? false,
-      height: json['height'] ?? 0,
+      height: (json['height'] as num?)?.toInt() ?? 300,
       isFullWidth: json['is_full_width'] ?? false,
       slug: json['slug'] ?? '',
-      level: json['level'] ?? 0,
+      level: (json['level'] as num?)?.toInt() ?? 0,
     );
   }
 }

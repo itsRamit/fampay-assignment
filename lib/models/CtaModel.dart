@@ -22,7 +22,7 @@ class Cta {
       bgColor: json['bg_color'] ?? '',
       isCircular: json['is_circular'] ?? false,
       isSecondary: json['is_secondary'] ?? false,
-      strokeWidth: json['stroke_width'] ?? 0,
+      strokeWidth: (json['stroke_width'] as num?)?.toInt() ?? 0,
     );
   }
 }
