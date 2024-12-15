@@ -1,3 +1,4 @@
+import 'package:card_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class HC1Card extends StatelessWidget {
@@ -27,7 +28,7 @@ class HC1Card extends StatelessWidget {
       width: double.infinity,
       height: height.toDouble() + 16,
       decoration: BoxDecoration(
-        color: convertHexToColor(bgColor),
+        color: Utils().convertHexToColor(bgColor),
         borderRadius: BorderRadius.circular(15),
       ),
       padding: const EdgeInsets.all(16),
@@ -62,7 +63,7 @@ class HC1Card extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: convertHexToColor(titleColor),
+                    color: Utils().convertHexToColor(titleColor),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -71,7 +72,7 @@ class HC1Card extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: 14,
-                    color: convertHexToColor(
+                    color: Utils().convertHexToColor(
                         descriptionColor),
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -82,13 +83,5 @@ class HC1Card extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  // Helper function to convert a single hex string to Color
-  Color convertHexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
   }
 }

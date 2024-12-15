@@ -1,16 +1,9 @@
+import 'package:card_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 import 'package:url_launcher/url_launcher.dart';
 import 'package:card_app/models/BgImageModel.dart';
 import 'package:card_app/models/CtaModel.dart';
-
-// Helper function to convert hex to Color
-Color convertHexToColor(String hexString) {
-  final buffer = StringBuffer();
-  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-  buffer.write(hexString.replaceFirst('#', ''));
-  return Color(int.parse(buffer.toString(), radix: 16));
-}
 
 class HC3Card extends StatefulWidget {
   final int id;
@@ -55,6 +48,7 @@ class _HC3CardState extends State<HC3Card> {
       dismissedIds.add(widget.id.toString());
     }
     await prefs.setStringList('dismissedCards', dismissedIds);
+    Utils().toastmessage("Card removed");
     setState(() {});
   }
 
@@ -200,8 +194,8 @@ class _HC3CardState extends State<HC3Card> {
                                 Text(
                                   widget.title,
                                   style: TextStyle(
-                                    color:
-                                        convertHexToColor(widget.titleColor!),
+                                    color: Utils()
+                                        .convertHexToColor(widget.titleColor!),
                                     fontSize: widget.titleFontSize.toDouble(),
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -221,8 +215,8 @@ class _HC3CardState extends State<HC3Card> {
                                   ? widget.description!
                                   : "This is a sample text for the subtitle that you can add to contextual cards",
                               style: TextStyle(
-                                color:
-                                    convertHexToColor(widget.descriptionColor!),
+                                color: Utils().convertHexToColor(
+                                    widget.descriptionColor!),
                                 fontSize: widget.descriptionFontSize.toDouble(),
                               ),
                             ),
@@ -233,15 +227,17 @@ class _HC3CardState extends State<HC3Card> {
                                   if (await canLaunch(widget.url!)) {
                                     await launch(widget.url!);
                                   } else {
-                                    throw 'Could not launch URL';
+                                    Utils()
+                                        .toastmessage('Could not launch URL');
                                   }
                                 } catch (e) {
-                                  print('Error launching URL: $e');
+                                  Utils()
+                                      .toastmessage('Error launching URL: $e');
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    convertHexToColor(widget.cta!.bgColor),
+                                backgroundColor: Utils()
+                                    .convertHexToColor(widget.cta!.bgColor),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),

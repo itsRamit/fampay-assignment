@@ -1,3 +1,4 @@
+import 'package:card_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class HC9Card extends StatelessWidget {
@@ -49,14 +50,6 @@ class HC9Card extends StatelessWidget {
 
   // Helper function to convert a list of hex strings to Color objects
   List<Color> _convertHexToColors(List<String> hexStrings) {
-    return hexStrings.map((hex) => convertHexToColor(hex)).toList();
-  }
-
-  // Helper function to convert a single hex string to Color
-  Color convertHexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
+    return hexStrings.map((hex) => Utils().convertHexToColor(hex)).toList();
   }
 }
