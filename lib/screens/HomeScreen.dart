@@ -7,31 +7,11 @@ import 'package:card_app/widgets/HC6Card.dart';
 import 'package:card_app/widgets/HC9Card.dart';
 import 'package:flutter/material.dart';
 
-class Homescreen extends StatefulWidget {
+class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
 
-  @override
-  State<Homescreen> createState() => _HomescreenState();
-}
-
-class _HomescreenState extends State<Homescreen> {
-  List<HcGroup> HcGroups = [];
-  bool isLoading = false;
-
-  getData() async {
-    setState(() {
-      isLoading = true;
-    });
-    HcGroups = await HcGroupsService().getHcGroups();
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
+  Future<List<HcGroup>> getData() async {
+    return await HcGroupsService().getHcGroups();
   }
 
   @override
@@ -41,77 +21,117 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              HC3Card(
-                height: HcGroups[0].height,
-                formatText: HcGroups[0].cards[0].formattedTitle!.text,
-                title: HcGroups[0].cards[0].formattedTitle!.entities[0].text,
-                description:
-                    HcGroups[0].cards[0].formattedTitle!.entities[1].text,
-                titleFontSize:
-                    HcGroups[0].cards[0].formattedTitle!.entities[0].fontSize!,
-                descriptionFontSize:
-                    HcGroups[0].cards[0].formattedTitle!.entities[1].fontSize!,
-                titleColor:
-                    HcGroups[0].cards[0].formattedTitle!.entities[0].color,
-                descriptionColor:
-                    HcGroups[0].cards[0].formattedTitle!.entities[1].color,
-                cta: HcGroups[0].cards[0].cta?[0],
-                bgImage: HcGroups[0].cards[0].bgImage!,
-                url: HcGroups[0].cards[0].url,
-              ),
-              HC6Card(
-                height: HcGroups[1].height,
-                iconSize: HcGroups[1].cards[0].iconSize!,
-                text: HcGroups[1].cards[0].formattedTitle!.entities[0].text,
-                ImgUrl: HcGroups[1].cards[0].icon!.imageUrl,
-                bgColor: HcGroups[1].cards[0].bgColor!,
-                textColor:
-                    HcGroups[1].cards[0].formattedTitle!.entities[0].color!,
-              ),
-              HC5Card(
-                imageUrl: HcGroups[2].cards[0].bgImage!.imageUrl,
-              ),
-              SingleChildScrollView(
-                padding: EdgeInsets.only(top: 16),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    HcGroups[3].cards.length,
-                    (index) => Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: HC9Card(
-                        imageUrl: HcGroups[3].cards[index].bgImage!.imageUrl,
-                        aspectRatio:
-                            HcGroups[3].cards[index].bgImage!.aspectRatio,
-                        hexGradientColors:
-                            HcGroups[3].cards[index].bgGradient!.colors,
-                        angle: HcGroups[3].cards[index].bgGradient!.angle,
-                        height: HcGroups[3].height,
+        child: FutureBuilder<List<HcGroup>>(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No data available.'));
+            } else {
+              List<HcGroup> hcGroups = snapshot.data!;
+
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HC3Card(
+                      height: hcGroups[0].height,
+                      formatText: hcGroups[0].cards[0].formattedTitle!.text,
+                      title:
+                          hcGroups[0].cards[0].formattedTitle!.entities[0].text,
+                      description:
+                          hcGroups[0].cards[0].formattedTitle!.entities[1].text,
+                      titleFontSize: hcGroups[0]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[0]
+                          .fontSize!,
+                      descriptionFontSize: hcGroups[0]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[1]
+                          .fontSize!,
+                      titleColor: hcGroups[0]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[0]
+                          .color,
+                      descriptionColor: hcGroups[0]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[1]
+                          .color,
+                      cta: hcGroups[0].cards[0].cta?[0],
+                      bgImage: hcGroups[0].cards[0].bgImage!,
+                      url: hcGroups[0].cards[0].url,
+                    ),
+                    HC6Card(
+                      height: hcGroups[1].height,
+                      iconSize: hcGroups[1].cards[0].iconSize!,
+                      text:
+                          hcGroups[1].cards[0].formattedTitle!.entities[0].text,
+                      ImgUrl: hcGroups[1].cards[0].icon!.imageUrl,
+                      bgColor: hcGroups[1].cards[0].bgColor!,
+                      textColor: hcGroups[1]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[0]
+                          .color!,
+                    ),
+                    HC5Card(
+                      imageUrl: hcGroups[2].cards[0].bgImage!.imageUrl,
+                    ),
+                    SingleChildScrollView(
+                      padding: const EdgeInsets.only(top: 16),
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          hcGroups[3].cards.length,
+                          (index) => Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: HC9Card(
+                              imageUrl:
+                                  hcGroups[3].cards[index].bgImage!.imageUrl,
+                              aspectRatio:
+                                  hcGroups[3].cards[index].bgImage!.aspectRatio,
+                              hexGradientColors:
+                                  hcGroups[3].cards[index].bgGradient!.colors,
+                              angle: hcGroups[3].cards[index].bgGradient!.angle,
+                              height: hcGroups[3].height,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    HC1Card(
+                      height: hcGroups[4].height,
+                      bgColor: hcGroups[4].cards[0].bgColor!,
+                      imageUrl: hcGroups[4].cards[0].icon!.imageUrl,
+                      title:
+                          hcGroups[4].cards[0].formattedTitle!.entities[0].text,
+                      description: hcGroups[4]
+                          .cards[0]
+                          .formattedDescription!
+                          .entities[0]
+                          .text,
+                      descriptionColor: hcGroups[4]
+                          .cards[0]
+                          .formattedDescription!
+                          .entities[0]
+                          .color!,
+                      titleColor: hcGroups[4]
+                          .cards[0]
+                          .formattedTitle!
+                          .entities[0]
+                          .color!,
+                    ),
+                  ],
                 ),
-              ),
-              HC1Card(
-                height: HcGroups[4].height,
-                bgColor: HcGroups[4].cards[0].bgColor!,
-                imageUrl: HcGroups[4].cards[0].icon!.imageUrl,
-                title: HcGroups[4].cards[0].formattedTitle!.entities[0].text,
-                description:
-                    HcGroups[4].cards[0].formattedDescription!.entities[0].text,
-                descriptionColor: HcGroups[4]
-                    .cards[0]
-                    .formattedDescription!
-                    .entities[0]
-                    .color!,
-                titleColor:
-                    HcGroups[4].cards[0].formattedTitle!.entities[0].color!,
-              ),
-            ],
-          ),
+              );
+            }
+          },
         ),
       ),
     );
