@@ -1,7 +1,6 @@
 import 'package:card_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-
 class HC6Card extends StatelessWidget {
   final int height;
   final int iconSize;
@@ -21,10 +20,12 @@ class HC6Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Container(
-        height: height + 32, //32 more for padding
+        height: height + 16, //16 more for padding
+        width: double.infinity,
         decoration: BoxDecoration(
             color: Utils().convertHexToColor(bgColor),
             borderRadius: BorderRadius.circular(15)),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:card_app/constants/ApiConstants.dart';
 import 'package:card_app/models/ApiResponse.dart';
+import 'package:card_app/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 final http.Client _client = http.Client();
@@ -30,14 +31,14 @@ class ApiService {
       } else {
         // To Handle different error responses
         if (response.statusCode == 404) {
-          log("Error: Not Found (404) - The resource could not be found.");
+          Utils().toastmessage("Error: Not Found (404)");
         } else if (response.statusCode == 500) {
-          log("Error: Server Error (500) - The server encountered an error.");
+          Utils().toastmessage("Error: Server Error (500)");
         } else {
-          log("Unexpected error occurred with status code: ${response.statusCode}");
+          Utils().toastmessage("Unexpected error occurred with status code: ${response.statusCode}");
         }
         throw Exception('Failed to load data');
-      }
+      } 
     } catch (error) {
       // if catches any errors in the request process
       log("Error in GET request: $error");

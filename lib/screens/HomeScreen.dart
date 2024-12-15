@@ -39,7 +39,7 @@ class _HomescreenState extends State<Homescreen> {
       backgroundColor: const Color(0xffF7F6F3),
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: RefreshIndicator(
           onRefresh: _onRefresh,
           child: FutureBuilder<List<HcGroup>>(
@@ -47,110 +47,111 @@ class _HomescreenState extends State<Homescreen> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No data available.'));
-              } else {
-                List<HcGroup> hcGroups = snapshot.data!;
-
-                return ListView(
-                  children: [
-                    HC3Card(
-                      id: hcGroups[0].cards[0].id,
-                      height: hcGroups[0].height,
-                      formatText: hcGroups[0].cards[0].formattedTitle!.text,
-                      title:
-                          hcGroups[0].cards[0].formattedTitle!.entities[0].text,
-                      description:
-                          hcGroups[0].cards[0].formattedTitle!.entities[1].text,
-                      titleFontSize: hcGroups[0]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[0]
-                          .fontSize!,
-                      descriptionFontSize: hcGroups[0]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[1]
-                          .fontSize!,
-                      titleColor: hcGroups[0]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[0]
-                          .color,
-                      descriptionColor: hcGroups[0]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[1]
-                          .color,
-                      cta: hcGroups[0].cards[0].cta?[0],
-                      bgImage: hcGroups[0].cards[0].bgImage!,
-                      url: hcGroups[0].cards[0].url,
-                    ),
-                    HC6Card(
-                      height: hcGroups[1].height,
-                      iconSize: hcGroups[1].cards[0].iconSize!,
-                      text:
-                          hcGroups[1].cards[0].formattedTitle!.entities[0].text,
-                      ImgUrl: hcGroups[1].cards[0].icon!.imageUrl,
-                      bgColor: hcGroups[1].cards[0].bgColor!,
-                      textColor: hcGroups[1]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[0]
-                          .color!,
-                    ),
-                    HC5Card(
-                      imageUrl: hcGroups[2].cards[0].bgImage!.imageUrl,
-                    ),
-                    SingleChildScrollView(
-                      padding: const EdgeInsets.only(top: 16),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          hcGroups[3].cards.length,
-                          (index) => Padding(
-                            padding: const EdgeInsets.only(right: 16.0),
-                            child: HC9Card(
-                              imageUrl:
-                                  hcGroups[3].cards[index].bgImage!.imageUrl,
-                              aspectRatio:
-                                  hcGroups[3].cards[index].bgImage!.aspectRatio,
-                              hexGradientColors:
-                                  hcGroups[3].cards[index].bgGradient!.colors,
-                              angle: hcGroups[3].cards[index].bgGradient!.angle,
-                              height: hcGroups[3].height,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    HC1Card(
-                      height: hcGroups[4].height,
-                      bgColor: hcGroups[4].cards[0].bgColor!,
-                      imageUrl: hcGroups[4].cards[0].icon!.imageUrl,
-                      title:
-                          hcGroups[4].cards[0].formattedTitle!.entities[0].text,
-                      description: hcGroups[4]
-                          .cards[0]
-                          .formattedDescription!
-                          .entities[0]
-                          .text,
-                      descriptionColor: hcGroups[4]
-                          .cards[0]
-                          .formattedDescription!
-                          .entities[0]
-                          .color!,
-                      titleColor: hcGroups[4]
-                          .cards[0]
-                          .formattedTitle!
-                          .entities[0]
-                          .color!,
-                    ),
-                  ],
-                );
               }
+
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No data available.'));
+              }
+
+              final hcGroups = snapshot.data!;
+
+              return ListView(
+                children: [
+                  // HC3Card
+                  HC3Card(
+                    id: hcGroups[0].cards[0].id,
+                    height: hcGroups[0].height,
+                    formatText: hcGroups[0].cards[0].formattedTitle!.text,
+                    title:
+                        hcGroups[0].cards[0].formattedTitle!.entities[0].text,
+                    description:
+                        hcGroups[0].cards[0].formattedTitle!.entities[1].text,
+                    titleFontSize: hcGroups[0]
+                        .cards[0]
+                        .formattedTitle!
+                        .entities[0]
+                        .fontSize!,
+                    descriptionFontSize: hcGroups[0]
+                        .cards[0]
+                        .formattedTitle!
+                        .entities[1]
+                        .fontSize!,
+                    titleColor:
+                        hcGroups[0].cards[0].formattedTitle!.entities[0].color,
+                    descriptionColor:
+                        hcGroups[0].cards[0].formattedTitle!.entities[1].color,
+                    cta: hcGroups[0].cards[0].cta?[0],
+                    bgImage: hcGroups[0].cards[0].bgImage!,
+                    url: hcGroups[0].cards[0].url,
+                  ),
+
+                  // HC6Card
+                  HC6Card(
+                    height: hcGroups[1].height,
+                    iconSize: hcGroups[1].cards[0].iconSize!,
+                    text: hcGroups[1].cards[0].formattedTitle!.entities[0].text,
+                    ImgUrl: hcGroups[1].cards[0].icon!.imageUrl,
+                    bgColor: hcGroups[1].cards[0].bgColor!,
+                    textColor:
+                        hcGroups[1].cards[0].formattedTitle!.entities[0].color!,
+                  ),
+
+                  // HC5Card
+                  HC5Card(
+                    imageUrl: hcGroups[2].cards[0].bgImage!.imageUrl,
+                  ),
+
+                  // Horizontal Scrollable HC9Cards
+                  Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    height: hcGroups[3].height.toDouble(), // Fixed height
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: hcGroups[3].cards.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: HC9Card(
+                            imageUrl:
+                                hcGroups[3].cards[index].bgImage!.imageUrl,
+                            aspectRatio:
+                                hcGroups[3].cards[index].bgImage!.aspectRatio,
+                            hexGradientColors:
+                                hcGroups[3].cards[index].bgGradient!.colors,
+                            angle: hcGroups[3].cards[index].bgGradient!.angle,
+                            height: hcGroups[3].height,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // HC1Card
+                  HC1Card(
+                    height: hcGroups[4].height,
+                    bgColor: hcGroups[4].cards[0].bgColor!,
+                    imageUrl: hcGroups[4].cards[0].icon!.imageUrl,
+                    title:
+                        hcGroups[4].cards[0].formattedTitle!.entities[0].text,
+                    description: hcGroups[4]
+                        .cards[0]
+                        .formattedDescription!
+                        .entities[0]
+                        .text,
+                    descriptionColor: hcGroups[4]
+                        .cards[0]
+                        .formattedDescription!
+                        .entities[0]
+                        .color!,
+                    titleColor:
+                        hcGroups[4].cards[0].formattedTitle!.entities[0].color!,
+                  ),
+                ],
+              );
             },
           ),
         ),

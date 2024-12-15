@@ -224,15 +224,9 @@ class _HC3CardState extends State<HC3Card> {
                             ElevatedButton(
                               onPressed: () async {
                                 try {
-                                  if (await canLaunch(widget.url!)) {
-                                    await launch(widget.url!);
-                                  } else {
-                                    Utils()
-                                        .toastmessage('Could not launch URL');
-                                  }
+                                  await launch(widget.url!);
                                 } catch (e) {
-                                  Utils()
-                                      .toastmessage('Error launching URL: $e');
+                                  Utils().toastmessage('Could not launch URL');
                                 }
                               },
                               style: ElevatedButton.styleFrom(
