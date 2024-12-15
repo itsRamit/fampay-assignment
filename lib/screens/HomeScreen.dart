@@ -37,7 +37,10 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF7F6F3),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Logo"),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: RefreshIndicator(

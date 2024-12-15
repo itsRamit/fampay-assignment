@@ -20,12 +20,12 @@ class HC6Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Container(
         height: height + 16, //16 more for padding
-        width: double.infinity,
+        width: width,
         decoration: BoxDecoration(
             color: Utils().convertHexToColor(bgColor),
             borderRadius: BorderRadius.circular(15)),

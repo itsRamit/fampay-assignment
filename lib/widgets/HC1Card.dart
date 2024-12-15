@@ -23,9 +23,10 @@ class HC1Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Container(
       margin:const EdgeInsets.only(top: 16, bottom: 16),
-      width: double.infinity,
+      width: width,
       height: height.toDouble() + 16,
       decoration: BoxDecoration(
         color: Utils().convertHexToColor(bgColor),

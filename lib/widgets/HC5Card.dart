@@ -10,7 +10,9 @@ class HC5Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Container(
+      width: width,
       margin: const EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),

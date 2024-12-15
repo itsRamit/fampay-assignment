@@ -61,7 +61,7 @@ class _HC3CardState extends State<HC3Card> {
   @override
   Widget build(BuildContext context) {
     String subtitle = widget.formatText.replaceAll(RegExp(r'[\{\}\n]'), '');
-
+    var width = MediaQuery.of(context).size.width;
     return FutureBuilder<bool>(
       future: _isCardDismissed(),
       builder: (context, snapshot) {
