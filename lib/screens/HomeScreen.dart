@@ -1,5 +1,6 @@
 import 'package:card_app/models/HcGroupModel.dart';
 import 'package:card_app/services/HcGroupsService.dart';
+import 'package:card_app/widgets/HC1Card.dart';
 import 'package:card_app/widgets/HC3Card.dart';
 import 'package:card_app/widgets/HC5Card.dart';
 import 'package:card_app/widgets/HC6Card.dart';
@@ -80,8 +81,7 @@ class _HomescreenState extends State<Homescreen> {
                   children: List.generate(
                     HcGroups[3].cards.length,
                     (index) => Padding(
-                      padding: const EdgeInsets.only(
-                          right: 16.0),
+                      padding: const EdgeInsets.only(right: 16.0),
                       child: HC9Card(
                         imageUrl: HcGroups[3].cards[index].bgImage!.imageUrl,
                         aspectRatio:
@@ -94,6 +94,21 @@ class _HomescreenState extends State<Homescreen> {
                     ),
                   ),
                 ),
+              ),
+              HC1Card(
+                height: HcGroups[4].height,
+                bgColor: HcGroups[4].cards[0].bgColor!,
+                imageUrl: HcGroups[4].cards[0].icon!.imageUrl,
+                title: HcGroups[4].cards[0].formattedTitle!.entities[0].text,
+                description:
+                    HcGroups[4].cards[0].formattedDescription!.entities[0].text,
+                descriptionColor: HcGroups[4]
+                    .cards[0]
+                    .formattedDescription!
+                    .entities[0]
+                    .color!,
+                titleColor:
+                    HcGroups[4].cards[0].formattedTitle!.entities[0].color!,
               ),
             ],
           ),
