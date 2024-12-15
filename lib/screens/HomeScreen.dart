@@ -3,6 +3,7 @@ import 'package:card_app/services/HcGroupsService.dart';
 import 'package:card_app/widgets/HC3Card.dart';
 import 'package:card_app/widgets/HC5Card.dart';
 import 'package:card_app/widgets/HC6Card.dart';
+import 'package:card_app/widgets/HC9Card.dart';
 import 'package:flutter/material.dart';
 
 class Homescreen extends StatefulWidget {
@@ -14,11 +15,6 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   List<HcGroup> HcGroups = [];
-  List<HcGroup> hcGroupHC3 = [];
-  List<HcGroup> hcGroupHC6 = [];
-  List<HcGroup> hcGroupHC5 = [];
-  List<HcGroup> hcGroupHC9 = [];
-  List<HcGroup> hcGroupHC1 = [];
   bool isLoading = false;
 
   getData() async {
@@ -31,22 +27,6 @@ class _HomescreenState extends State<Homescreen> {
     });
   }
 
-  void extractHcGroupsByType() {
-    for (var group in HcGroups) {
-      if (group.designType == "HC3") {
-        hcGroupHC3.add(group);
-      } else if (group.designType == "HC6") {
-        hcGroupHC6.add(group);
-      } else if (group.designType == "HC5") {
-        hcGroupHC5.add(group);
-      } else if (group.designType == "HC9") {
-        hcGroupHC9.add(group);
-      } else if (group.designType == "HC1") {
-        hcGroupHC1.add(group);
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -56,7 +36,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF7F6F3),
+      backgroundColor: const Color(0xffF7F6F3),
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16),
@@ -90,7 +70,31 @@ class _HomescreenState extends State<Homescreen> {
                 textColor:
                     HcGroups[1].cards[0].formattedTitle!.entities[0].color!,
               ),
-              HC5Card(imageUrl: HcGroups[2].cards[0].bgImage!.imageUrl,)
+              HC5Card(
+                imageUrl: HcGroups[2].cards[0].bgImage!.imageUrl,
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.only(top: 16),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    HcGroups[3].cards.length,
+                    (index) => Padding(
+                      padding: const EdgeInsets.only(
+                          right: 16.0),
+                      child: HC9Card(
+                        imageUrl: HcGroups[3].cards[index].bgImage!.imageUrl,
+                        aspectRatio:
+                            HcGroups[3].cards[index].bgImage!.aspectRatio,
+                        hexGradientColors:
+                            HcGroups[3].cards[index].bgGradient!.colors,
+                        angle: HcGroups[3].cards[index].bgGradient!.angle,
+                        height: HcGroups[3].height,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
