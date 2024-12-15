@@ -1,6 +1,7 @@
 import 'package:card_app/models/HcGroupModel.dart';
 import 'package:card_app/services/HcGroupsService.dart';
 import 'package:card_app/widgets/HC3Card.dart';
+import 'package:card_app/widgets/HC5Card.dart';
 import 'package:card_app/widgets/HC6Card.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +89,8 @@ class _HomescreenState extends State<Homescreen> {
                 bgColor: HcGroups[1].cards[0].bgColor!,
                 textColor:
                     HcGroups[1].cards[0].formattedTitle!.entities[0].color!,
-              )
+              ),
+              HC5Card(imageUrl: HcGroups[2].cards[0].bgImage!.imageUrl,)
             ],
           ),
         ),

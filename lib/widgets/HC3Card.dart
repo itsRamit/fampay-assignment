@@ -51,7 +51,8 @@ class HC3Card extends StatelessWidget {
         color: const Color(0xff454AA6),
         image: DecorationImage(
           image: NetworkImage(bgImage.imageUrl),
-          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+          fit: BoxFit.fitWidth,
         ),
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -61,6 +62,9 @@ class HC3Card extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(
+              height: height.toDouble() / 4,
+            ),
             // Title and Subtitle Section
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +119,8 @@ class HC3Card extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               child: Text(
                 cta!.text.isEmpty ? 'Action' : cta!.text,
